@@ -77,7 +77,12 @@ impl GameEngine {
     }
 
     pub fn get_piece(&self, loc: Coordinate) -> Result<Option<GamePiece>, ()> {
-        Ok(None)
+        let Coordinate(x, y) = loc;
+        if x > 7 || y > 7 {
+            Err(())
+        } else {
+            Ok(self.board[x][y])
+        }
     }
 
     fn midpiece_coordinate(&self, fx: usize, fy: usize, tx: usize, ty: usize) -> Option<Coordinate> {
