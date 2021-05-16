@@ -85,7 +85,20 @@ impl GameEngine {
     }
 
     fn midpiece_coordinate(&self, fx: usize, fy: usize, tx: usize, ty: usize) -> Option<Coordinate> {
-        panic!("Implement me!");
+        if fx + 2 == tx {
+            if fy + 2 == ty {
+                return Some(Coordinate(fx + 1, fy + 1));
+            } else if fy - 2 == ty {
+                return Some(Coordinate(fx + 1, fy - 1));
+            }
+        } else if fx - 2 == tx {
+            if fy + 2 == ty {
+                return Some(Coordinate(fx - 1, fy + 1));
+            } else if fy - 2 == ty {
+                return Some(Coordinate(fx - 1, fy - 1));
+            }
+        }
+
         None
     }
 
@@ -131,12 +144,20 @@ impl GameEngine {
     }
 
     fn valid_move(&mut self, p: &GamePiece, from: &Coordinate, to: &Coordinate) -> bool {
-        panic!("Implement me!");
-        false
+        let source_piece = self.get_piece(*from);
+        let target_piece = self.get_piece(*to);
+        source_piece.is_ok() && source_piece.unwrap().is_some() && source_piece.unwrap().unwrap().color == self.current_turn && target_piece.is_ok() && !target_piece.unwrap().is_some()
     }
 
     fn valid_jump(&mut self, p: &GamePiece, from: &Coordinate, to: &Coordinate) -> bool {
-        panic!("Implement me!");
+        let Coordinate(fx, fy) = *from;
+        let Coordinate(tx, ty) = *to;
+        if let Some(midpiece) = self.midpiece_coordinate(fx, fy, tx, ty) {
+            if let Some(jumped_piece) = self.get_piece(midpiece).unwrap() {
+                return p.color != jumped_piece.color;
+            }
+        }
+
         false
     }
     
