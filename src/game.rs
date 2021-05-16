@@ -54,7 +54,6 @@ impl GameEngine {
             self.board[x][y] = None; // remove the jumped piece
         }
 
-        // Move piece from source to destination
         self.board[tx][ty] = Some(piece);
         self.board[fx][fy] = None;
 
@@ -142,12 +141,23 @@ impl GameEngine {
     }
     
     fn should_crown(&self, p: GamePiece, loc: Coordinate) -> bool {
-        panic!("Implement me!");
+        let Coordinate(x, y) = loc;
+        if let Some(p) = self.board[x][y] {
+            match (p.color, y) {
+                (PieceColor::White, 7) => return true,
+                (PieceColor::Black, 0) => return true,
+                _ => return false,
+            }
+        }
+
         false
     }
 
     fn crown_piece(&mut self, loc: Coordinate) {
-        panic!("Implement me!");
+        let Coordinate(x, y) = loc;
+        if let Some(p) = self.board[x][y] {
+            self.board[x][y] = Some(GamePiece::crowned(p));
+        }
     }
 
     fn advance_turn(&mut self) {
