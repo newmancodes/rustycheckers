@@ -72,12 +72,20 @@ impl GameEngine {
         })
     }
 
+    pub fn current_turn(&self) -> PieceColor {
+        self.current_turn
+    }
+
+    pub fn get_piece(&self, loc: Coordinate) -> Result<Option<GamePiece>, ()> {
+        Ok(None)
+    }
+
     fn midpiece_coordinate(&self, fx: usize, fy: usize, tx: usize, ty: usize) -> Option<Coordinate> {
         panic!("Implement me!");
         None
     }
 
-    fn legal_moves(&self) -> Vec<Move> {
+    fn legal_moves(&mut self) -> Vec<Move> {
         let mut moves: Vec<Move> = Vec::new();
         for col in 0..8 {
             for row in 0..8 {
@@ -94,7 +102,7 @@ impl GameEngine {
         moves
     }
 
-    fn valid_moves_from(&self, loc: Coordinate) -> Vec<Move> {
+    fn valid_moves_from(&mut self, loc: Coordinate) -> Vec<Move> {
         let Coordinate(x, y) = loc;
         if let Some(p) = self.board[x][y] {
             let mut moves = loc
