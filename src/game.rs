@@ -146,6 +146,10 @@ impl GameEngine {
     }
 
     fn advance_turn(&mut self) {
-        panic!("Implement me!");
+        self.move_count = self.move_count + 1;
+        match self.current_turn {
+            PieceColor::White => self.current_turn = PieceColor::Black,
+            PieceColor::Black => self.current_turn = PieceColor::White,
+        }
     }
 }

@@ -14,7 +14,7 @@ const PIECEFLAG_CROWN: u8 = 4;
 
 lazy_static! {
     pub static ref GAME_ENGINE: MutStatic<GameEngine> =
-    { MutStatic::from(GameEngine::new()) };
+    MutStatic::from(GameEngine::new());
 }
 
 #[no_mangle]
